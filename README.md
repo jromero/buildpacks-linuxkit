@@ -84,6 +84,8 @@ FOUND: https://github.com/linuxkit/linuxkit/issues/3339
 
 Without being able to start a container it is hard to tell how feasible this solution would be. It's still relatively heavy but otherwise the integration would be relatively light due to using exisiting integration points (docker client).
 
+The resulting VM image (`docker-for-mac-efi.iso`) is **613MB**.
+
 Next steps, this error seems like something that could be further investigated or resolved automatically in the upstream later at a later time. 
 
 #### 2. Dockerless - LinuxKit and Containerd
@@ -141,7 +143,9 @@ FOUND: https://github.com/containerd/containerd/issues/3910#issuecomment-5682157
 
 ###### Conclusion
 
-It appears that there is a strong limitation on how the `containerd` go library can be used via socket. It does A LOT more than just communication. It attempts to mutate the local file system as if it was **co-located**.
+It appears that there is a strong limitation on how the `containerd` go library can be used via socket. It does A LOT more than just communication. It attempts to mutate the local file system as if it was **co-located** with the service.
+
+The resulting VM image (`dockerless-containerd-efi.iso`) is **373MB**.
 
 Next steps:
 
