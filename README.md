@@ -6,13 +6,13 @@ Eliminate the dependency on [Docker Desktop for Mac](https://hub.docker.com/edit
 
 In an ideal world, you would download `pack` and start using it with no additional dependencies.
 
-### Log
+## Log
 
 #### 1. Replace Docker Desktop with LinuxKit and DinD
 
 ##### Goal
 
-Similar to how Docker for Mac works, the idea would be to "embed" docker inside of a managed VM. This would retain the functionality but remove the application from needed to be installed.
+Similar to how Docker for Mac works, the idea would be to "embed" docker inside of a managed VM. This would retain the functionality but remove the application from needing to be installed.
 
 ```text
                      +-----------------------------------------------------+
@@ -21,7 +21,7 @@ Similar to how Docker for Mac works, the idea would be to "embed" docker inside 
                      |                                                     |
 +-----------+        |         +---------------------------------------+   |
 |           |        |         |                                       |   |
-|   client  |        |         |  LinuxKit                             |   |
+|    pack   |        |         |  LinuxKit                             |   |
 |           |        |         |                                       |   |
 +-----------+        |         |      +----------------------------+   |   |
                      |         |      |                            |   |   |
@@ -49,11 +49,12 @@ brew tap linuxkit/linuxkit
 brew install linuxkit
 ```
 
-From: https://www.qemu.org/download/#macos
-```bash
-brew install qemu
-```
-NOTE:
+> NOTE: I did go in with the intention of using qemu but changed direction to hyperkit once I found more information and examples about it's usage in LinuxKit.
+> 
+> From: https://www.qemu.org/download/#macos
+> ```bash
+> brew install qemu
+> ```
 
 From: https://github.com/linuxkit/linuxkit/blob/master/examples/docker-for-mac.md
 ```bash
@@ -77,13 +78,13 @@ alpine: Pulling from cnbs/sample-builder
 ERROR: container start: Error response from daemon: OCI runtime create failed: container_linux.go:349: starting container process caused "process_linux.go:449: container init caused \"process_linux.go:432: running prestart hook 0 caused \\\"fork/exec /proc/7/exe: no such file or directory\\\"\"": unknown
 ```
 
-Found https://github.com/linuxkit/linuxkit/issues/3339
+FOUND: https://github.com/linuxkit/linuxkit/issues/3339
 
 ##### Conclusion
 
 Without being able to start a container it is hard to tell how feasible this solution would be. It's still relatively heavy but otherwise the integration would be relatively light due to using exisiting integration points (docker client).
 
-Next steps, this error seems like something that could be further investigated or resolved automatically in the upstream later in time. 
+Next steps, this error seems like something that could be further investigated or resolved automatically in the upstream later at a later time. 
 
 #### 2. Dockerless - LinuxKit and Containerd
 
@@ -94,7 +95,7 @@ Attempt to slim down the dependencies by communicating to containerd directly in
 ```text
 +-----------+        +------------------------------------------+
 |           |        |                                          |
-|   client  |        |  qemu / HyperKit  (swappable)            |
+|    pack   |        |  qemu / HyperKit  (swappable)            |
 |           |        |                                          |
 +-----------+        |                                          |
                      |         +----------------------------+   |
